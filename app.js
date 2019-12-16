@@ -4,9 +4,19 @@ window.addEventListener('load', () => {
 
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(position => {
-            console.log(position);
+            long = position.coords.longitude;
+            lat = position.coords.latitude;
+
+            const proxy = "https://cors-anywhere.herokuapp.com/";
+            const api = `${proxy}https://api.darksky.net/forecast/883a0d50b7df4f8f79e4748ef3152654/${lat},${long}`;
+
+            fetch(api)
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    console.log(data);
+                });
         });
-    } else {
-        h1.textContent = "Hi, please enable access to your location in order to see the current weather in your region."
-    }
+    } 
 });
